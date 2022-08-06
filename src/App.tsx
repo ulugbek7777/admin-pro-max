@@ -1,12 +1,5 @@
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 import {
@@ -19,8 +12,8 @@ import Dailies from "./Components/Dailies/Dailies";
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
-    const [authorized, setAuthorized] = useState(isAuthenticated);
-    const [collapsed, setCollapsed] = useState(false);
+    const [authorized, setAuthorized] = useState<string | null>(isAuthenticated);
+    const [collapsed, setCollapsed] = useState<boolean>(false);
     console.log('render')
     let location = useLocation();
     console.log(location)
