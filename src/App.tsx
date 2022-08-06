@@ -9,16 +9,23 @@ import {
 } from "react-router-dom";
 import Login from "./Components/Auth/Login";
 import Dailies from "./Components/Dailies/Dailies";
+import {
+    useQuery,
+    useMutation,
+    useQueryClient,
+    QueryClient,
+    QueryClientProvider,
+} from 'react-query'
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
     const [authorized, setAuthorized] = useState<string | null>(isAuthenticated);
     const [collapsed, setCollapsed] = useState<boolean>(false);
-    console.log('render')
+    const queryClient = new QueryClient()
     let location = useLocation();
     console.log(location)
   return (
-        <div className="App">
+      <QueryClientProvider client={queryClient}><div className="App">
             {!authorized && location.pathname !== '/login' && <Navigate
                 to={{
                     pathname: '/login',
@@ -66,7 +73,7 @@ const App: React.FC = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
             </Routes>
-        </div>
+      </div></QueryClientProvider>
   );
 }
 
