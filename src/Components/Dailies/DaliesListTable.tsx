@@ -1,6 +1,7 @@
 import React from 'react';
 import {PaginationProps, Spin, Table} from "antd";
 import moment from "moment";
+import CompanySearchDaily from "./CompanySearchDaily";
 
 interface dalyDataSource {
     id: number | string;
@@ -49,6 +50,7 @@ const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading}: {
     }
     return (
         <div>
+            <CompanySearchDaily />
             <Spin size="large" spinning={loading}>
                 <Table onChange={onChange} dataSource={dailiesData.map((u: any): dalyDataSource => {
                     const obj = {
