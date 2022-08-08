@@ -1,5 +1,6 @@
 import React from 'react';
-import {PaginationProps, Table} from "antd";
+import {PaginationProps, Spin, Table} from "antd";
+import moment from "moment";
 
 interface dalyDataSource {
     id: number | string;
@@ -10,24 +11,6 @@ interface dalyDataSource {
     lastLogEndDate: string | undefined | null;
 }
 
-const dataSource: dalyDataSource[] = [
-    {
-        id: 1,
-        driver: 'dfvcfewfw',
-        date: '12-32-2323',
-        lastLogStatus: 'string',
-        lastLogStartDate: 'string',
-        lastLogEndDate: 'string',
-    },
-    {
-        id: 1,
-        driver: 'dfvcfewfw',
-        date: '12-32-2323',
-        lastLogStatus: 'string',
-        lastLogStartDate: 'string',
-        lastLogEndDate: 'string',
-    },
-];
 const columns: object[] = [
     {
         title: 'Id',
@@ -38,6 +21,11 @@ const columns: object[] = [
         title: 'Driver',
         dataIndex: 'driver',
         key: 'driver',
+    },
+    {
+        title: 'date',
+        dataIndex: 'date',
+        key: 'date',
     },
     {
         title: 'lastLogStatus',
@@ -55,23 +43,25 @@ const columns: object[] = [
         key: 'lastLogEndDate',
     },
 ];
-const DaliesListTable = ({dailiesData}: {dailiesData: object[]}) => {
+const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading}: {dailiesData: object[], total: number | undefined, changeCurrentSkip(current: number): any, loading: boolean}) => {
     const onChange = (data: any) => {
-        console.log(data)
+        changeCurrentSkip(data.current - 1)
     }
     return (
         <div>
-            <Table onChange={onChange} dataSource={dailiesData.map((u: any): dalyDataSource => {
-                const obj = {
-                    id: u.id,
-                    driver: u.cache?.driver.first_name + ' ' + u.cache?.driver.second_name,
-                    date: u.date,
-                    lastLogStatus: u.cache?.driver.status.status,
-                    lastLogStartDate: u.cache?.driver.status.start_date,
-                    lastLogEndDate: u.cache?.driver.status.end_date
-                }
-                return obj;
-            })} columns={columns} pagination={{ defaultPageSize: 10, total: 100}} />
+            <Spin size="large" spinning={loading}>
+                <Table onChange={onChange} dataSource={dailiesData.map((u: any): dalyDataSource => {
+                    const obj = {
+                        id: u.id,
+                        driver: u.cache ? u.cache?.driver.first_name + ' ' + u.cache?.driver.second_name : '',
+                        date: moment(u.date).format('MM-DD-YYYY'),
+                        lastLogStatus: u.last_log?.status,
+                        lastLogStartDate: u.last_log?.start_date,
+                        lastLogEndDate: u.last_log?.end_date
+                    }
+                    return obj;
+                })} columns={columns} pagination={{ total: total, pageSizeOptions: [10] }} />
+            </Spin>
         </div>
     );
 };
