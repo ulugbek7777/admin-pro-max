@@ -6,7 +6,8 @@ type MyStructure = Object[];
 const SearchResult = async (query: any) => {
     console.log(query)
     const data: MyStructure = await useDailiesFindCompany({name: query, id: undefined});
-    return data.map((el: any) => {
+    const dataFor = [{id: undefined, name: 'All vehicles'}, ...data]
+    return dataFor.map((el: any) => {
             const category = `${el.name}`;
             return {
                 valId: el.id,
@@ -50,7 +51,7 @@ const CompanySearchDaily = ({findDailiesByCompany}: {findDailiesByCompany: any})
 
     };
     const optimizedFn = useCallback(debounce(handleSearch), []);
-    const onSelect = (value: any, {valId}: {valId: number}) => {
+    const onSelect = (value: any, {valId}: {valId: number | undefined}) => {
         findDailiesByCompany(valId)
     };
 

@@ -17,9 +17,7 @@ const Dailies: React.FC = React.memo(() => {
         "skip":0
         }
     );
-    const [countFilter, setCountFilter] = useState<{companyId: number | string}>({
-        "companyId": ''
-    })
+    const [countFilter, setCountFilter] = useState<any>({})
     const [total, setTotal] = useState<number>(1);
     const { data }: Data = useDailiesData({date: null, filter, countFilter})
     useEffect(() => {
@@ -38,14 +36,27 @@ const Dailies: React.FC = React.memo(() => {
             }
         })
     }, [])
-    const findDailiesByCompany = useCallback((id: number) => {
+    const findDailiesByCompany = useCallback((id: number | undefined) => {
+        if(!id) {
+            setFilter(value => {
+                return {
+                    ...value,
+                    where: {
+                        ...value.where,
+                        companyId: undefined
+                    }
+                }
+            })
+            setCountFilter({})
+            return
+        }
         setFilter(value => {
             return {
                 ...value,
                 where: id ? {companyId: id} : {}
             }
         })
-        setCountFilter({companyId: id ? id : ''})
+        setCountFilter({companyId: id})
         }, [],
     );
 

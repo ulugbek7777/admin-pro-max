@@ -45,7 +45,7 @@ const columns: object[] = [
         key: 'lastLogEndDate',
     },
 ];
-const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, findDailiesByCompany}: {dailiesData: object[], total: number | undefined, changeCurrentSkip(current: number): any, loading: boolean, findDailiesByCompany(id: number): any}) => {
+const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, findDailiesByCompany}: {dailiesData: object[], total: number | undefined, changeCurrentSkip(current: number): any, loading: boolean, findDailiesByCompany(id: number | undefined): any}) => {
     const onChange = (data: any) => {
         changeCurrentSkip(data.current - 1)
     }
