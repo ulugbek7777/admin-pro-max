@@ -1,43 +1,33 @@
 import { AutoComplete, Input } from 'antd';
 import React, {useCallback, useState} from 'react';
+import {useDailiesFindCompany} from "../../Hooks/Dailies";
 
-const getRandomInt = (max: any, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const searchResult = (query: any) => {
+type MyStructure = Object[];
+const SearchResult = async (query: any) => {
     console.log(query)
-    return [<></>]
+    const data: MyStructure = await useDailiesFindCompany({name: query, id: undefined});
+    return data.map((el: any) => {
+            const category = `${el.name}`;
+            return {
+                valId: el.id,
+                value: category,
+                label: (
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <span>
+                          Company: {el.name}
+                        </span>
+                    </div>
+                ),
+            };
+        });
 }
-    // new Array(getRandomInt(5))
-    //     .join('.')
-    //     .split('.')
-    //     .map((_, idx) => {
-    //         const category = `${query}${idx}`;
-    //         return {
-    //             value: category,
-    //             label: (
-    //                 <div
-    //                     style={{
-    //                         display: 'flex',
-    //                         justifyContent: 'space-between',
-    //                     }}
-    //                 >
-    //         <span>
-    //           Found {query} on{' '}
-    //             <a
-    //                 href={`https://s.taobao.com/search?q=${query}`}
-    //                 target="_blank"
-    //                 rel="noopener noreferrer"
-    //             >
-    //             {category}
-    //           </a>
-    //         </span>
-    //                     <span>{getRandomInt(200, 100)} results</span>
-    //                 </div>
-    //             ),
-    //         };
-    //     });
 
-const CompanySearchDaily = () => {
+const CompanySearchDaily = ({findDailiesByCompany}: {findDailiesByCompany: any}) => {
     const [options, setOptions] = useState<Array<any>>([]);
     const debounce = (func: any) => {
         let timer: any;
@@ -50,9 +40,9 @@ const CompanySearchDaily = () => {
             }, 500);
         };
     };
-    const handleSearch = (value: any) => {
+    const handleSearch = async (value: any) => {
         if(value) {
-            let data = searchResult(value);
+            let data = await SearchResult(value);
             setOptions(data);
         } else {
             setOptions([]);
@@ -60,8 +50,8 @@ const CompanySearchDaily = () => {
 
     };
     const optimizedFn = useCallback(debounce(handleSearch), []);
-    const onSelect = (value: any) => {
-        console.log('onSelect', value);
+    const onSelect = (value: any, {valId}: {valId: number}) => {
+        findDailiesByCompany(valId)
     };
 
     return (

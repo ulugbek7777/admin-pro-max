@@ -3,7 +3,10 @@ import {dailies} from "../../API/Dailies/daily";
 import {useDailiesData} from "../../Hooks/Dailies";
 import DaliesListTable from "./DaliesListTable";
 type Data = {
-    data?: Array<any>
+    data?: {
+        data: Array<any>,
+        count: number
+    }
 }
 const Dailies: React.FC = React.memo(() => {
     const [dailiesData, setDailiesData] = useState<Array<any>>([]);
@@ -14,13 +17,16 @@ const Dailies: React.FC = React.memo(() => {
         "skip":0
         }
     );
+    const [countFilter, setCountFilter] = useState<{companyId: number | string}>({
+        "companyId": ''
+    })
     const [total, setTotal] = useState<number>(1);
-    const { data }: Data = useDailiesData({date: null, filter})
+    const { data }: Data = useDailiesData({date: null, filter, countFilter})
     useEffect(() => {
         if(data) {
-            setDailiesData(data)
+            setDailiesData(data.data)
             if(filter.skip === 0) {
-                setTotal(Math.ceil(data[0]?.id) - 10)
+                setTotal(data.count)
             }
         }
     }, [data]);
@@ -32,11 +38,22 @@ const Dailies: React.FC = React.memo(() => {
             }
         })
     }, [])
+    const findDailiesByCompany = useCallback((id: number) => {
+        setFilter(value => {
+            return {
+                ...value,
+                where: id ? {companyId: id} : {}
+            }
+        })
+        setCountFilter({companyId: id ? id : ''})
+        }, [],
+    );
+
     console.log(dailiesData)
     return (
         <div>
             <h1>Dailies</h1>
-            <DaliesListTable dailiesData={dailiesData} total={total} changeCurrentSkip={changeCurrentSkip} loading={!data} />
+            <DaliesListTable dailiesData={dailiesData} total={total} changeCurrentSkip={changeCurrentSkip} loading={!data} findDailiesByCompany={findDailiesByCompany} />
         </div>
     );
 });
