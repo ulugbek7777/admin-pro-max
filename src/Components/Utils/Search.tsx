@@ -1,34 +1,7 @@
 import { AutoComplete, Input } from 'antd';
 import React, {useCallback, useState} from 'react';
-import {useDailiesFindCompany} from "../../Hooks/Dailies";
 
-type MyStructure = Object[];
-const SearchResult = async (query: any) => {
-    console.log(query)
-    const data: MyStructure = await useDailiesFindCompany({name: query, id: undefined});
-    const dataFor = [{id: undefined, name: 'All vehicles'}, ...data]
-    return dataFor.map((el: any) => {
-        const category = `${el.name}`;
-        return {
-            valId: el.id,
-            value: category,
-            label: (
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                    }}
-                >
-                        <span>
-                          Company: {el.name}
-                        </span>
-                </div>
-            ),
-        };
-    });
-}
-
-const Search = ({SearchResult, onSelect}: {SearchResult: any, onSelect: any}) => {
+const Search = ({SearchResult, onSelect, placeholder}: {SearchResult: any, onSelect: any, placeholder: string}) => {
     const [options, setOptions] = useState<Array<any>>([]);
     const debounce = (func: any) => {
         let timer: any;
@@ -65,7 +38,7 @@ const Search = ({SearchResult, onSelect}: {SearchResult: any, onSelect: any}) =>
             onSelect={onSelect}
             onSearch={optimizedFn}
         >
-            <Input.Search size="large" placeholder="input here" enterButton />
+            <Input.Search placeholder={placeholder} enterButton />
         </AutoComplete>
     );
 };

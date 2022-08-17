@@ -2,6 +2,8 @@ import React from 'react';
 import {PaginationProps, Spin, Table} from "antd";
 import moment from "moment";
 import CompanySearchDaily from "./CompanySearchDaily";
+import Search from '../Utils/Search';
+import { SearchResultForFindDriver } from '../Utils/SearchResults';
 
 interface dalyDataSource {
     id: number | string;
@@ -45,13 +47,18 @@ const columns: object[] = [
         key: 'lastLogEndDate',
     },
 ];
-const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, findDailiesByCompany}: {dailiesData: object[], total: number | undefined, changeCurrentSkip(current: number): any, loading: boolean, findDailiesByCompany(id: number | undefined): any}) => {
+const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, findDailiesByCompany, findDailiesByDriver}: 
+    {dailiesData: object[], total: number | undefined, changeCurrentSkip(current: number): any, loading: boolean, findDailiesByCompany(id: number | undefined): any, findDailiesByDriver(driverId: number | string | undefined): any}) => {
     const onChange = (data: any) => {
         changeCurrentSkip(data.current - 1)
+    }
+    const onSelectDriver = (value: any, {valId}: {valId: number | string | undefined}) => {
+        findDailiesByDriver(valId)
     }
     return (
         <div>
             <CompanySearchDaily findDailiesByCompany={findDailiesByCompany} />
+            <Search SearchResult={SearchResultForFindDriver} onSelect={onSelectDriver} placeholder="Driver name"/>
             <Spin size="large" spinning={loading}>
                 <Table onChange={onChange} dataSource={dailiesData.map((u: any): dalyDataSource => {
                     const obj: dalyDataSource = {

@@ -53,18 +53,39 @@ const Dailies: React.FC = React.memo(() => {
         setFilter(value => {
             return {
                 ...value,
-                where: id ? {companyId: id} : {}
+                where: id ? {...value.where, companyId: id, driverId: undefined} : {}
             }
         })
-        setCountFilter({companyId: id})
-        }, [],
+        setCountFilter({...countFilter, companyId: id})
+        }, [countFilter],
     );
-
+    const findDailiesByDriver = useCallback((driverId: number | string | undefined) => {
+        if(!driverId) {
+            setFilter(value => {
+                return {
+                    ...value,
+                    where: {
+                        ...value.where,
+                        driverId: undefined
+                    }
+                }
+            })
+            setCountFilter({})
+            return
+        }
+        setFilter(value => {
+            return {
+                ...value,
+                where: driverId ? {...value.where, driverId, companyId: undefined} : {}
+            }
+        })
+        setCountFilter({...countFilter, driverId})
+    }, [countFilter])
     console.log(dailiesData)
     return (
         <div>
             <h1>Dailies</h1>
-            <DaliesListTable dailiesData={dailiesData} total={total} changeCurrentSkip={changeCurrentSkip} loading={!data} findDailiesByCompany={findDailiesByCompany} />
+            <DaliesListTable dailiesData={dailiesData} total={total} changeCurrentSkip={changeCurrentSkip} loading={!data} findDailiesByCompany={findDailiesByCompany} findDailiesByDriver={findDailiesByDriver} />
         </div>
     );
 });

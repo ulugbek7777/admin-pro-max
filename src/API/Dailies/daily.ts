@@ -11,5 +11,27 @@ export const dailies = {
             "where":{"name": {"ilike":name}}
         }))}`);
         return data;
+    },
+    async driverFinder({name, companyId}: {name: string, companyId: number | undefined}) {
+        let query: any = {
+            "where":{
+                "role":"driver", 
+                "is_active":true, 
+                "first_name": {"ilike":name}
+            }
+        }
+        if(companyId) {
+            query = {
+                ...query,
+                where: {
+                    ...query.where,
+                    companyId
+                }
+            }
+        }
+        const { data }: { data: Array<any> } = await instance(`users?filter=${encodeURIComponent(JSON.stringify({
+            ...query
+        }))}`)
+        return data;
     }
 }

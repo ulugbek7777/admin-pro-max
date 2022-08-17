@@ -65,7 +65,7 @@ const CompanySearchDaily = ({findDailiesByCompany}: {findDailiesByCompany: any})
             onSelect={onSelect}
             onSearch={optimizedFn}
         >
-            <Input.Search size="large" placeholder="input here" enterButton />
+            <Input.Search placeholder="Company Search" enterButton />
         </AutoComplete>
     );
 };
