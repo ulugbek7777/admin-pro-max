@@ -1,10 +1,10 @@
 import {useQuery} from "react-query";
 import {dailies} from "../../API/Dailies/daily";
 
-export const useDailiesData = ({ date, filter, countFilter }: {date: string | null, filter: object, countFilter: object}): object => {
+export const useDailiesData = ({ date, filter, countFilter }: {date: string | undefined, filter: object, countFilter: object}): object => {
     return useQuery([
         `dailies/${date}`, date, filter],
-        () => dailies.read({filter, countFilter}),
+        () => dailies.read({filter, countFilter, date}),
         { staleTime: 5 * 60 * 1000 })
 }
 

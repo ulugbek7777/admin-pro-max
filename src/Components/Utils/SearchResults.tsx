@@ -3,6 +3,7 @@ import { useDailiesFindDriver } from '../../Hooks/Dailies';
 
 type MyStructure = Object[];
 export const SearchResultForFindDriver = async (query: any, companyId: number | undefined) => {
+    console.log(companyId)
     const data: MyStructure = await useDailiesFindDriver({name: query, companyId});
     const dataFor = [{id: undefined, first_name: 'All', second_name: 'Drivers'}, ...data]
     return dataFor.map((el: any) => {

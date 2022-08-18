@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {dailies} from "../../API/Dailies/daily";
 import {useDailiesData} from "../../Hooks/Dailies";
 import DaliesListTable from "./DaliesListTable";
+import moment from "moment";
 type Data = {
     data?: {
         data: Array<any>,
@@ -9,9 +10,10 @@ type Data = {
     }
 }
 const Dailies: React.FC = React.memo(() => {
+    const [todayDate, setTodayDate] = useState<string | undefined>(moment.utc(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(11, 'hour').toISOString());
     const [dailiesData, setDailiesData] = useState<Array<any>>([]);
     const [filter, setFilter] = useState<{where: object, order: any, limit: number, skip: number}>({
-        "where":{},
+        "where":{date: todayDate},
         "order":["id DESC"],
         "limit":10,
         "skip":0
@@ -19,7 +21,7 @@ const Dailies: React.FC = React.memo(() => {
     );
     const [countFilter, setCountFilter] = useState<any>({})
     const [total, setTotal] = useState<number>(1);
-    const { data }: Data = useDailiesData({date: null, filter, countFilter})
+    const { data }: Data = useDailiesData({date: todayDate, filter, countFilter})
     useEffect(() => {
         if(data) {
             setDailiesData(data.data)
@@ -81,11 +83,17 @@ const Dailies: React.FC = React.memo(() => {
         })
         setCountFilter({...countFilter, driverId})
     }, [countFilter])
-    console.log(dailiesData)
+    const changeDate = useCallback(
+        (date: string) => {
+            setTodayDate(date)
+        },
+        [],
+    );
+
     return (
         <div>
             <h1>Dailies</h1>
-            <DaliesListTable dailiesData={dailiesData} total={total} changeCurrentSkip={changeCurrentSkip} loading={!data} findDailiesByCompany={findDailiesByCompany} findDailiesByDriver={findDailiesByDriver} />
+            <DaliesListTable dailiesData={dailiesData} total={total} changeCurrentSkip={changeCurrentSkip} loading={!data} findDailiesByCompany={findDailiesByCompany} findDailiesByDriver={findDailiesByDriver} changeDate={changeDate} />
         </div>
     );
 });

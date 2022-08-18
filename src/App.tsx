@@ -36,6 +36,11 @@ const App: React.FC = () => {
                     pathname: '/dailies',
                 }}
             />}
+          {authorized && location.pathname === '/' && <Navigate
+              to={{
+                  pathname: '/dailies',
+              }}
+          />}
             {authorized ? <Layout>
                 <Sider trigger={null} collapsible collapsed={collapsed} style={{height: '100vh'}}>
                     <div className="logo" />
@@ -51,10 +56,6 @@ const App: React.FC = () => {
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="site-layout-background" style={{ padding: 0 }}>
-                        {/*{React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {*/}
-                        {/*    className: 'trigger',*/}
-                        {/*    onClick: () => setCollapsed(!collapsed),*/}
-                        {/*})}*/}
                     </Header>
                     <Content
                         className="site-layout-background"

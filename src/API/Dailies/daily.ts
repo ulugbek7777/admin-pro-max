@@ -1,9 +1,9 @@
 import instance from "../api";
 
 export const dailies = {
-    async read({filter, countFilter}: {filter: object | string, countFilter: object | string}) {
+    async read({filter, countFilter, date}: {filter: object | string, countFilter: object, date: string | undefined}) {
         const { data }: { data: object } = await instance(`dailies?filter=${JSON.stringify(filter)}`)
-        const count = await instance(`dailies/count?where=${JSON.stringify(countFilter)}`)
+        const count = await instance(`dailies/count?where=${JSON.stringify({...countFilter, date})}`)
         return {data, count: count.data.count}
     },
     async companyFinder({name, id}: {name: string | undefined, id: number | string | undefined}) {
@@ -15,8 +15,8 @@ export const dailies = {
     async driverFinder({name, companyId}: {name: string, companyId: number | undefined}) {
         let query: any = {
             "where":{
-                "role":"driver", 
-                "is_active":true, 
+                "role":"driver",
+                "is_active":true,
                 "first_name": {"ilike":name}
             }
         }
