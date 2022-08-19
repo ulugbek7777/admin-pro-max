@@ -16,6 +16,7 @@ import {
     QueryClient,
     QueryClientProvider,
 } from 'react-query'
+import Companies from "./Components/Companies/Companies";
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
@@ -52,6 +53,9 @@ const App: React.FC = () => {
                         <Menu.Item key={'/dailies'}>
                             <Link to="/dailies" className="nav-text">Dailies</Link>
                         </Menu.Item>
+                        <Menu.Item key={'/companies'}>
+                            <Link to="/companies" className="nav-text">Companies</Link>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
@@ -67,6 +71,7 @@ const App: React.FC = () => {
                     >
                         <Routes>
                             <Route path="/dailies" element={<Dailies />} />
+                            <Route path="/companies" element={<Companies />} />
                         </Routes>
                     </Content>
                 </Layout>
