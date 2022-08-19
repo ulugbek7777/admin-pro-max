@@ -1,9 +1,8 @@
 import React from 'react';
 import {DatePicker, PaginationProps, Spin, Table} from "antd";
 import moment from "moment";
-import CompanySearchDaily from "./CompanySearchDaily";
 import Search from '../Utils/Search';
-import { SearchResultForFindDriver } from '../Utils/SearchResults';
+import {SearchResultForCompany, SearchResultForFindDriver} from '../Utils/SearchResults';
 
 interface dalyDataSource {
     id: number | string;
@@ -61,7 +60,9 @@ const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, fi
     };
     return (
         <div>
-            <CompanySearchDaily findDailiesByCompany={findDailiesByCompany} />
+            <Search SearchResult={SearchResultForCompany} onSelect={(value: any, {valId}: {valId: number | undefined}) => {
+                findDailiesByCompany(valId)
+            }} placeholder={'Company Search'} />
             <Search SearchResult={SearchResultForFindDriver} onSelect={onSelectDriver} placeholder="Driver name"/>
             <DatePicker defaultValue={moment()} format={'YYYY-MM-DD'} disabledDate={(current) => {
                 let customDate = moment().add(1, 'd').format("YYYY-MM-DD");
