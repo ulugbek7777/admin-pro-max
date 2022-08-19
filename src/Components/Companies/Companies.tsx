@@ -1,11 +1,15 @@
 import React from 'react';
+import Search from "../Utils/Search";
+import {SearchResultForCompany} from "../Utils/SearchResults";
 
-const MyComponent = () => {
+const Companies = () => {
     return (
         <div>
-            <h1>hellllooooooo worlddddd</h1>
+            <Search SearchResult={SearchResultForCompany} onSelect={(value: any, {valId}: {valId: number | undefined}) => {
+                console.log(value, valId)
+            }} placeholder={'Company Search'} />
         </div>
     );
 };
 
-export default MyComponent;
+export default Companies;

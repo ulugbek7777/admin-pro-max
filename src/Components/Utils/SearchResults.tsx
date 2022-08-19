@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDailiesFindDriver } from '../../Hooks/Dailies';
+import {useDailiesFindCompany, useDailiesFindDriver} from '../../Hooks/Dailies';
 
 type MyStructure = Object[];
 export const SearchResultForFindDriver = async (query: any, companyId: number | undefined) => {
@@ -21,6 +21,32 @@ export const SearchResultForFindDriver = async (query: any, companyId: number | 
                 >
                         <span>
                           Driver: {el.first_name + ' ' + el.second_name}
+                        </span>
+                </div>
+            ),
+        };
+    });
+}
+
+export const SearchResultForCompany = async (query: string) => {
+    const data: MyStructure = await useDailiesFindCompany({name: query, id: undefined});
+    const dataFor = [{id: undefined, name: 'All vehicles'}, ...data]
+    return dataFor.map((el: any) => {
+        const category = `${el.name}`;
+        return {
+            valId: el.id,
+            value: category,
+            key: el.id,
+            label: (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                    }}
+                    key={el.id}
+                >
+                        <span>
+                          Company: {el.name}
                         </span>
                 </div>
             ),
