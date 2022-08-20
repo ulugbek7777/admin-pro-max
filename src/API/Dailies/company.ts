@@ -6,8 +6,15 @@ export const companies = {
         let filterForCount = companyId ? {id: companyId} : {};
 
         const { data }: { data: object } = await instance(`companies?filter=${encodeURIComponent(JSON.stringify(filter))}`);
-        const count = await instance(`companies/count?where=${JSON.stringify(filterForCount)}`);
-
-        return {data, count: count.data.count};
+        console.log(companyId)
+        const getCount = async () => {
+            if(!companyId) {
+                const count = await instance(`companies/count?where=${JSON.stringify(filterForCount)}`);
+                return count.data.count;
+            }
+            return 0;
+        }
+        const count = await getCount();
+        return {data, count: count};
     }
 }
