@@ -1,4 +1,5 @@
 import instance from "../api";
+import {message} from "antd";
 
 export const companies = {
     async read(companyId: number | undefined, sort: boolean | undefined, skip: number | undefined) {
@@ -16,5 +17,23 @@ export const companies = {
         }
         const count = await getCount();
         return {data, count: count};
+    },
+    async companyData(companyId: string | number | undefined) {
+        const { data }: { data: any } = await instance(`companies/${companyId}`);
+        return data;
+    },
+    async companyPatchData(companyData: any) {
+        const key = 'updatable';
+        message.loading({ content: 'Loading...', key });
+        const { data }: { data: any } = await instance(`companies/${companyData.id}`,{
+            method: 'PATCH',
+            data: companyData
+        }).then(u => {
+            setTimeout(() => {
+                message.success({ content: 'Loaded!', key, duration: 2 });
+            }, 1000);
+            return u;
+        });
+        return data;
     }
 }

@@ -17,6 +17,7 @@ import {
     QueryClientProvider,
 } from 'react-query'
 import Companies from "./Components/Companies/Companies";
+import { Company } from "./Components/Companies/Company/Company";
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
@@ -72,6 +73,7 @@ const App: React.FC = () => {
                         <Routes>
                             <Route path="/dailies" element={<Dailies />} />
                             <Route path="/companies" element={<Companies />} />
+                            <Route path="/companies/:id" element={<Company />} />
                         </Routes>
                     </Content>
                 </Layout>
