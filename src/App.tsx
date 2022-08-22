@@ -24,7 +24,7 @@ const App: React.FC = () => {
     const [authorized, setAuthorized] = useState<string | null>(isAuthenticated);
     const [collapsed, setCollapsed] = useState<boolean>(false);
     const queryClient = new QueryClient()
-    let location = useLocation();
+    let location: any = useLocation();
     console.log(location)
   return (
       <QueryClientProvider client={queryClient}><div className="App">
@@ -49,7 +49,7 @@ const App: React.FC = () => {
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={[location.pathname]}
+                        defaultSelectedKeys={[(location.pathname.includes('/dailies') && '/dailies') || (location.pathname.includes('/companies') && '/companies')]}
                     >
                         <Menu.Item key={'/dailies'}>
                             <Link to="/dailies" className="nav-text">Dailies</Link>

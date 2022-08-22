@@ -15,6 +15,7 @@ export const LoginApi = async ({ userName, password }: loginInterface) => {
         localStorage.setItem('token', data.id);
         localStorage.setItem('user', data.user);
         localStorage.setItem('expires', data.ttl);
+        document.location.replace('/')
     }
     catch (err) {
         console.log(err);
