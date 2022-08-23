@@ -13,7 +13,7 @@ export const useDailiesFindCompany = async ({ name, id }: {name: string | undefi
     return await dailies.companyFinder({name, id})
 }
 
-export const useDailiesFindDriver = async ({name,  companyId}: {name: string,companyId: number | undefined}) => {
+export const useDailiesFindDriver = async ({name,  companyId, role}: {name: string,companyId: number | undefined, role: string | undefined}) => {
     name = '%' + name + '%';
-    return await dailies.driverFinder({name, companyId});
+    return await dailies.driverFinder({name, companyId, role});
 }

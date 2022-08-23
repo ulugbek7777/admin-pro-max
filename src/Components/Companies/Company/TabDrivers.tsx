@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useUsersData} from "../../../Hooks/Users";
 import {useParams} from "react-router-dom";
+import UsersTable from "../../Utils/UsersTable";
+import {SearchResultForFindDriver} from "../../Utils/SearchResults";
+import Search from "../../Utils/Search";
 
 type Data = {
     data?: {
@@ -13,12 +16,19 @@ type params = {
 }
 const TabDrivers = () => {
     const { id } = useParams<params>();
+    const [skip, setSkip] = useState(0);
     const companyId: number = parseInt(id);
-    const { data }: Data = useUsersData(companyId, 'driver', undefined);
-    console.log(data)
+    const { data }: Data = useUsersData(companyId, 'driver', undefined, skip);
+    const onChange = (query: any) => {
+        setSkip(10 * (parseInt(query.current) - 1));
+    }
+    const onSelectDriver = (value: any, {valId}: {valId: number | string | undefined}) => {
+        console.log(value, valId)
+    }
     return (
         <div>
-            <h1>Here will be drivers list</h1>
+            <Search SearchResult={(query: string) => SearchResultForFindDriver(query, id, 'driver')} onSelect={onSelectDriver} placeholder="Driver name"/>
+            <UsersTable users={data?.data} total={data?.count} onChange={onChange} />
         </div>
     );
 };

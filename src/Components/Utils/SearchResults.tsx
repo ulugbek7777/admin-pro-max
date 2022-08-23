@@ -2,8 +2,8 @@ import React from 'react';
 import {useDailiesFindCompany, useDailiesFindDriver} from '../../Hooks/Dailies';
 
 type MyStructure = Object[];
-export const SearchResultForFindDriver = async (query: any, companyId: number | undefined) => {
-    const data: MyStructure = await useDailiesFindDriver({name: query, companyId});
+export const SearchResultForFindDriver = async (query: any, companyId: number | undefined, role: string | undefined) => {
+    const data: MyStructure = await useDailiesFindDriver({name: query, companyId, role});
     const dataFor = [{id: undefined, first_name: 'All', second_name: 'Drivers'}, ...data]
     return dataFor.map((el: any) => {
         const category = `${el.first_name + ' ' + el.second_name}`;

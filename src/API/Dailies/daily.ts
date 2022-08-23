@@ -12,38 +12,41 @@ export const dailies = {
         }))}`);
         return data;
     },
-    async driverFinder({name, companyId}: {name: string, companyId: number | undefined}) {
+    async driverFinder({name, companyId, role}: {name: string, companyId: number | undefined, role: string | undefined}) {
         const firstAndLast = name.split(' ');
 
         const nameFliter = (): any => {
             if(firstAndLast.length == 2) {
                 return [
-                    {'and': [{'first_name': {"ilike": firstAndLast[0]}}, {'second_name': {"ilike": firstAndLast[1]}}]},
-                    {'and': [{'first_name': {"ilike": firstAndLast[1]}}, {'second_name': {"ilike": firstAndLast[0]}}]}
+                    {'and': [{'first_name': {"ilike": firstAndLast[0]}}, {'second_name': {"ilike": firstAndLast[1]}}, ]},
+                    {'and': [{'first_name': {"ilike": firstAndLast[1]}}, {'second_name': {"ilike": firstAndLast[0]}}, ]}
                 ]
             } else {
                 return [
-                    {'and': [{'first_name': {"ilike": firstAndLast[0]}}]},
-                    {'and': [{'second_name': {"ilike": firstAndLast[0]}}]}
+                    {'and': [{'first_name': {"ilike": firstAndLast[0]}}, ]},
+                    {'and': [{'second_name': {"ilike": firstAndLast[0]}}, ]}
                 ]
             }
         }
         let query: any = {
             "where":{
-                "role":"driver",
-                "is_active":true,
-                or: nameFliter()
+                "and": [
+                    {role},
+                    {"is_active": true},
+                    {companyId},
+                    {or: nameFliter()}
+                ]
+
             }
         }
-        if(companyId) {
-            query = {
-                ...query,
-                where: {
-                    ...query.where,
-                    companyId
-                }
-            }
-        }
+        // if(companyId) {
+        //     query = {
+        //         ...query,
+        //         where: {
+        //             ...query.where
+        //         }
+        //     }
+        // }
         const { data }: { data: Array<any> } = await instance(`users?filter=${encodeURIComponent(JSON.stringify({
             ...query
         }))}`)

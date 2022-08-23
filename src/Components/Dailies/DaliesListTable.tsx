@@ -63,7 +63,7 @@ const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, fi
             <Search SearchResult={SearchResultForCompany} onSelect={(value: any, {valId}: {valId: number | undefined}) => {
                 findDailiesByCompany(valId)
             }} placeholder={'Company Search'} />
-            <Search SearchResult={SearchResultForFindDriver} onSelect={onSelectDriver} placeholder="Driver name"/>
+            <Search SearchResult={(query: string) => SearchResultForFindDriver(query, undefined, 'driver')} onSelect={onSelectDriver} placeholder="Driver name"/>
             <DatePicker defaultValue={moment()} format={'YYYY-MM-DD'} disabledDate={(current) => {
                 let customDate = moment().add(1, 'd').format("YYYY-MM-DD");
                 return current && current > moment(customDate, "YYYY-MM-DD");
