@@ -5,7 +5,7 @@ export const useDailiesData = ({ date, filter, countFilter }: {date: string | un
     return useQuery([
         `dailies/${date}`, date, filter],
         () => dailies.read({filter, countFilter, date}),
-        { staleTime: 5 * 60 * 1000 })
+        { refetchOnWindowFocus: false, staleTime: 5 * 60 * 1000 })
 }
 
 export const useDailiesFindCompany = async ({ name, id }: {name: string | undefined, id: string | number | undefined}) => {

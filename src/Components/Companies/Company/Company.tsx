@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { render } from "react-dom";
 import { Form, Field } from "react-final-form";
 import {Button, Input, Space, Spin, Switch, Tabs} from "antd";
-import {AndroidOutlined, AppleOutlined} from "@ant-design/icons";
+import {AndroidOutlined, AppleOutlined, WindowsOutlined} from "@ant-design/icons";
 import {useParams} from "react-router-dom";
 import {useCompanyData} from "../../../Hooks/Companies";
 import SelectTimezones from "./SelectTimezones";
-import {Value} from "react-query/types/devtools/Explorer";
 import {companies} from "../../../API/Dailies/company";
+import TabDrivers from "./TabDrivers";
 type inpTypStrNm = number | string | null | undefined;
 type inpBln = boolean | undefined | null;
 
@@ -90,7 +89,7 @@ export const Company: React.FC = () => {
                                     tab={
                                         <span>
                                           <AppleOutlined/>
-                                          Tab 1
+                                          MAIN FIELDS
                                         </span>
                                     }
                                     key="1"
@@ -208,13 +207,18 @@ export const Company: React.FC = () => {
                                                 )}
                                             />
                                         </div>
+                                        <div className="buttons">
+                                            <Button type="primary" htmlType="submit">
+                                                Submit
+                                            </Button>
+                                        </div>
                                     </Space>
                                 </TabPane>
                                 <TabPane
                                     tab={
                                         <span>
                                           <AndroidOutlined/>
-                                          Tab 2
+                                          STRIPE
                                         </span>
                                     }
                                     key="2"
@@ -265,14 +269,25 @@ export const Company: React.FC = () => {
                                                 )}
                                             />
                                         </div>
+                                        <div className="buttons">
+                                            <Button type="primary" htmlType="submit">
+                                                Submit
+                                            </Button>
+                                        </div>
                                     </Space>
                                 </TabPane>
+                                <TabPane
+                                    tab={
+                                        <span>
+                                          <WindowsOutlined />
+                                          DRIVERS
+                                        </span>
+                                    }
+                                    key="3"
+                                >
+                                    <TabDrivers />
+                                </TabPane>
                             </Tabs>
-                            <div className="buttons">
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </div>
                         </Space>
                     </form>
                 )}
