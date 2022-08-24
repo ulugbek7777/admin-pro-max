@@ -19,6 +19,7 @@ import {
 import Companies from "./Components/Companies/Companies";
 import { Company } from "./Components/Companies/Company/Company";
 import Users from "./Components/Users/Users";
+import User from "./Components/Users/User/User";
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
@@ -80,6 +81,7 @@ const App: React.FC = () => {
                             <Route path="/companies" element={<Companies />} />
                             <Route path="/companies/:id" element={<Company />} />
                             <Route path="/users" element={<Users />} />
+                            <Route path="/users/:id" element={<User />} />
                         </Routes>
                     </Content>
                 </Layout>
