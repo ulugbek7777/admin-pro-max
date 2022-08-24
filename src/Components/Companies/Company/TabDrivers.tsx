@@ -17,13 +17,14 @@ type params = {
 const TabDrivers = () => {
     const { id } = useParams<params>();
     const [skip, setSkip] = useState(0);
+    const [driverId, setDriverId] = useState<undefined | number | string>(undefined);
     const companyId: number = parseInt(id);
-    const { data }: Data = useUsersData(companyId, 'driver', undefined, skip);
+    const { data }: Data = useUsersData(companyId, 'driver', driverId, skip);
     const onChange = (query: any) => {
         setSkip(10 * (parseInt(query.current) - 1));
     }
     const onSelectDriver = (value: any, {valId}: {valId: number | string | undefined}) => {
-        console.log(value, valId)
+        setDriverId(valId);
     }
     return (
         <div>

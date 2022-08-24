@@ -4,7 +4,7 @@ import {useDailiesFindCompany, useDailiesFindDriver} from '../../Hooks/Dailies';
 type MyStructure = Object[];
 export const SearchResultForFindDriver = async (query: any, companyId: number | undefined, role: string | undefined) => {
     const data: MyStructure = await useDailiesFindDriver({name: query, companyId, role});
-    const dataFor = [{id: undefined, first_name: 'All', second_name: 'Drivers'}, ...data]
+    const dataFor = [{id: undefined, first_name: 'All', second_name: 'Users', role: 'User'}, ...data]
     return dataFor.map((el: any) => {
         const category = `${el.first_name + ' ' + el.second_name}`;
         return {
@@ -20,7 +20,7 @@ export const SearchResultForFindDriver = async (query: any, companyId: number | 
                     key={el.id}
                 >
                         <span>
-                          Driver: {el.first_name + ' ' + el.second_name}
+                          {el.role.toUpperCase()}: {el.first_name + ' ' + el.second_name}
                         </span>
                 </div>
             ),

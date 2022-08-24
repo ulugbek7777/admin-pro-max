@@ -18,6 +18,7 @@ import {
 } from 'react-query'
 import Companies from "./Components/Companies/Companies";
 import { Company } from "./Components/Companies/Company/Company";
+import Users from "./Components/Users/Users";
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
@@ -49,13 +50,17 @@ const App: React.FC = () => {
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={[(location.pathname.includes('/dailies') && '/dailies') || (location.pathname.includes('/companies') && '/companies')]}
+                        defaultSelectedKeys={[(location.pathname.includes('/dailies') && '/dailies') || (location.pathname.includes('/companies') && '/companies')
+                        || (location.pathname.includes('/users') && '/users')]}
                     >
                         <Menu.Item key={'/dailies'}>
                             <Link to="/dailies" className="nav-text">Dailies</Link>
                         </Menu.Item>
                         <Menu.Item key={'/companies'}>
                             <Link to="/companies" className="nav-text">Companies</Link>
+                        </Menu.Item>
+                        <Menu.Item key={'/users'}>
+                            <Link to="/users" className="nav-text">Users</Link>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -74,6 +79,7 @@ const App: React.FC = () => {
                             <Route path="/dailies" element={<Dailies />} />
                             <Route path="/companies" element={<Companies />} />
                             <Route path="/companies/:id" element={<Company />} />
+                            <Route path="/users" element={<Users />} />
                         </Routes>
                     </Content>
                 </Layout>
