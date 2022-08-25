@@ -20,5 +20,9 @@ export const users = {
         }
         const count = await getCount();
         return {data, count: count};
-    }
+    },
+    async userData(userId: string | number | undefined) {
+        const { data }: { data: any } = await instance(`users/${userId}`);
+        return data;
+    },
 }

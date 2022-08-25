@@ -35,5 +35,17 @@ export const companies = {
             return u;
         });
         return data;
-    }
+    },
+    async vehicleData(vehicleId: string | number | undefined) {
+        const { data }: { data: any } = await instance(`vehicles/${vehicleId}`);
+        return data;
+    },
+    async searchVehicleData(truck_number: string | number, companyId: string | number | undefined) {
+        const where = {and: [
+                {companyId},
+                {or: [{truck_number: truck_number}]}
+            ]}
+        const { data }: { data: any } = await instance(`vehicles?filter=${JSON.stringify({where: where})}`);
+        return data;
+    },
 }

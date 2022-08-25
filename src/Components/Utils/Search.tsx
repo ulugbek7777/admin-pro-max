@@ -1,7 +1,7 @@
 import { AutoComplete, Input } from 'antd';
 import React, {useCallback, useState} from 'react';
 
-const Search = ({SearchResult, onSelect, placeholder}: {SearchResult: any, onSelect: any, placeholder: string}) => {
+const Search = ({SearchResult, onSelect, placeholder, defaultValue}: {SearchResult: any, onSelect: any, placeholder: string, defaultValue?: string | undefined}) => {
     const [options, setOptions] = useState<Array<any>>([]);
     const debounce = (func: any) => {
         let timer: any;
@@ -37,6 +37,7 @@ const Search = ({SearchResult, onSelect, placeholder}: {SearchResult: any, onSel
             options={options}
             onSelect={onSelect}
             onSearch={optimizedFn}
+            defaultValue={defaultValue}
         >
             <Input.Search placeholder={placeholder} enterButton />
         </AutoComplete>

@@ -14,3 +14,12 @@ export const useCompanyData = (companyId: number | string | undefined): any => {
         () => companies.companyData(companyId),
         { refetchOnWindowFocus: false, staleTime: 5 * 60 * 1000 })
 }
+export const useVehicleData = (vehicleId: number | string | undefined): any => {
+    return useQuery([
+            `vehicles/${vehicleId}`, vehicleId],
+        () => companies.vehicleData(vehicleId),
+        { refetchOnWindowFocus: false, staleTime: 5 * 60 * 1000 })
+}
+export const useVehicleSearch = async (truck_number: string | number, companyId: string | number | undefined) => {
+    return await companies.searchVehicleData(truck_number, companyId)
+}
