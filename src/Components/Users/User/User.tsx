@@ -1,5 +1,5 @@
-import React from 'react';
-import {useParams} from "react-router-dom";
+import React, {useState} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
 import {Field, Form} from "react-final-form";
 import {Button, Input, Space, Spin, Switch, Tabs} from "antd";
 import {AndroidOutlined, AppleOutlined, SettingOutlined} from "@ant-design/icons";
@@ -10,8 +10,9 @@ import Config from "./Config";
 import {users} from "../../../API/Dailies/user";
 
 const { TabPane } = Tabs;
-
 const User = () => {
+    const [loading, setLoading] = useState<boolean>(false);
+    let navigate = useNavigate();
     const { id } = useParams<{readonly id: any}>();
     const { data } = useUserData(id);
     return (
@@ -19,7 +20,10 @@ const User = () => {
             <Spin size="large" spinning={!data}>
                 {data && <Form
                     onSubmit={async (data) => {
-                        await users.userDataPatch(id, data)
+                        setLoading(true)
+                        await users.userDataPatch(id, data);
+                        setLoading(false)
+                        navigate('/users')
                     }}
                     initialValues={data}
                     render={({handleSubmit, values}) => (
@@ -106,7 +110,7 @@ const User = () => {
                                 </Tabs>
                             </Space>
                             <div className="buttons" style={{marginTop: '20px'}}>
-                                <Button type="primary" htmlType="submit">
+                                <Button type="primary" htmlType="submit" disabled={loading}>
                                     Submit
                                 </Button>
                             </div>
