@@ -83,3 +83,29 @@ export const configs = [
     'allow_dispatcher_accept',
     'allow_bulk_edit',
 ]
+
+export const certifyStatus = [
+    { id: "regular", name: "Regular" },
+    { id: "certify_on_pti", name: "Certify on PTI" },
+    { id: "force_certify_on_pti", name: "Force certify on PTI" },
+]
+
+export const coordinatesSource = [
+    { id: "fused", name: "Fused" },
+    { id: "eld", name: "ELD" },
+    { id: "gps", name: "GPS" },
+];
+
+export const configNumberInputs = [
+    'tracking_frequency',
+    'event_filtering_time',
+    'video_duration',
+    'allocated_space_device',
+    'stationary_time',
+    'countdown_time',
+    'gps_tracking_frequency',
+    'zero_speed_time',
+    'update_distance',
+    'chat_update',
+    'min_distance',
+]

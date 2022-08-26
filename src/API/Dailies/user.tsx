@@ -25,6 +25,13 @@ export const users = {
         const { data }: { data: any } = await instance(`users/${userId}`);
         return data;
     },
+    async userDataPatch(userId: string | number | undefined, userData: object) {
+        const { data }: { data: any } = await instance(`users/${userId}`, {
+            method: 'PATCH',
+            data: userData
+        });
+        return data;
+    },
     async command(userId: string | number | undefined, command: string) {
         const { data }: { data: any } = await instance(`drivers/command`, {
             method: 'POST',

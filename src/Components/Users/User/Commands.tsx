@@ -50,8 +50,8 @@ const Commands = ({ data }: { data: any }) => {
                 <Space direction="horizontal" size="middle" style={{display: 'flex'}}>
                     <Button type="primary" onClick={() => showPromiseConfirm('rebirth')}>REBIRTH</Button>
                     <Button type="primary" onClick={showModal}>CHANGE PASSWORD</Button>
-                    <Button type="primary">LETTER</Button>
-                    <Button type="primary">MALFUNCTION</Button>
+                    {/*<Button type="primary">LETTER</Button>*/}
+                    {/*<Button type="primary">MALFUNCTION</Button>*/}
                 </Space>
             </Space>
         </div>

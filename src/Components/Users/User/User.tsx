@@ -7,6 +7,7 @@ import {useUserData} from "../../../Hooks/Users";
 import MainFields from "./MainFields";
 import Commands from "./Commands";
 import Config from "./Config";
+import {users} from "../../../API/Dailies/user";
 
 const { TabPane } = Tabs;
 
@@ -17,8 +18,8 @@ const User = () => {
         <div>
             <Spin size="large" spinning={!data}>
                 {data && <Form
-                    onSubmit={(data) => {
-                        debugger
+                    onSubmit={async (data) => {
+                        await users.userDataPatch(id, data)
                     }}
                     initialValues={data}
                     render={({handleSubmit, values}) => (
@@ -94,7 +95,7 @@ const User = () => {
                                     <TabPane
                                         tab={
                                             <span>
-                                          {/*<SettingOutlined />*/}
+                                          <SettingOutlined />
                                                 Config
                                         </span>
                                         }
