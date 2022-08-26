@@ -2,9 +2,11 @@ import React from 'react';
 import {useParams} from "react-router-dom";
 import {Field, Form} from "react-final-form";
 import {Button, Input, Space, Spin, Switch, Tabs} from "antd";
-import {AndroidOutlined, AppleOutlined, WindowsOutlined} from "@ant-design/icons";
+import {AndroidOutlined, AppleOutlined, SettingOutlined} from "@ant-design/icons";
 import {useUserData} from "../../../Hooks/Users";
 import MainFields from "./MainFields";
+import Commands from "./Commands";
+import Config from "./Config";
 
 const { TabPane } = Tabs;
 
@@ -32,7 +34,7 @@ const User = () => {
                                         }
                                         key="1"
                                     >
-                                        <Space direction="vertical" size="middle" style={{display: 'flex', width: '50%'}}>
+                                        <Space direction="vertical" size="middle" style={{display: 'flex'}}>
                                             <MainFields data={data}/>
                                         </Space>
                                     </TabPane>
@@ -40,25 +42,65 @@ const User = () => {
                                         tab={
                                             <span>
                                           <AndroidOutlined/>
-                                          STRIPE
+                                          Commands
                                         </span>
                                         }
                                         key="2"
                                     >
-                                        <Space direction="vertical" size="middle" style={{display: 'flex', width: '50%'}}>
-                                            wefewfwefewf
+                                        <Space direction="vertical" size="middle" style={{display: 'flex'}}>
+                                            <Commands data={data} />
                                         </Space>
                                     </TabPane>
                                     <TabPane
                                         tab={
                                             <span>
-                                          <WindowsOutlined />
-                                          DRIVERS
+                                          <SettingOutlined />
+                                          SETTINGS
                                         </span>
                                         }
                                         key="3"
                                     >
-                                        wefewfwef
+                                        <Space direction="vertical" size="middle" style={{display: 'flex'}}>
+                                            <div>
+                                                <label>enable_personal_conveyance: </label>
+                                                <Field
+                                                    name="settings.enable_personal_conveyance"
+                                                    render={({input}: { input: any }) => (
+                                                        <Switch defaultChecked={input.value} onChange={input.onChange}/>
+                                                    )}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label>
+                                                    enable_personal_conveyance: </label>
+                                                <Field
+                                                    name="settings.enable_personal_conveyance"
+                                                    render={({input}: { input: any }) => (
+                                                        <Switch defaultChecked={input.value} onChange={input.onChange}/>
+                                                    )}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label>enable_ssb: </label>
+                                                <Field
+                                                    name="settings.enable_ssb"
+                                                    render={({input}: { input: any }) => (
+                                                        <Switch defaultChecked={input.value} onChange={input.onChange}/>
+                                                    )}
+                                                />
+                                            </div>
+                                        </Space>
+                                    </TabPane>
+                                    <TabPane
+                                        tab={
+                                            <span>
+                                          {/*<SettingOutlined />*/}
+                                                Config
+                                        </span>
+                                        }
+                                        key="4"
+                                    >
+                                        <Config />
                                     </TabPane>
                                 </Tabs>
                             </Space>

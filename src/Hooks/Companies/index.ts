@@ -18,7 +18,7 @@ export const useVehicleData = (vehicleId: number | string | undefined): any => {
     return useQuery([
             `vehicles/${vehicleId}`, vehicleId],
         () => companies.vehicleData(vehicleId),
-        { refetchOnWindowFocus: false, staleTime: 5 * 60 * 1000 })
+        { refetchOnWindowFocus: false, staleTime: 5 * 60 * 1000, retry: false })
 }
 export const useVehicleSearch = async (truck_number: string | number, companyId: string | number | undefined) => {
     return await companies.searchVehicleData(truck_number, companyId)

@@ -25,4 +25,23 @@ export const users = {
         const { data }: { data: any } = await instance(`users/${userId}`);
         return data;
     },
+    async command(userId: string | number | undefined, command: string) {
+        const { data }: { data: any } = await instance(`drivers/command`, {
+            method: 'POST',
+            data: {
+                userId,
+                command
+            }
+        });
+        return data;
+    },
+    async changeUserPassword(password: string | number | undefined, id: number) {
+        const { data }: { data: any } = await instance(`dashboards/changeuserpass/${id}`, {
+            method: 'POST',
+            data: {
+                password
+            }
+        });
+        return data;
+    },
 }
