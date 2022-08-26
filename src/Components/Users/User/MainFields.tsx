@@ -48,7 +48,7 @@ const MainFields = ({ data }: { data: any }) => {
                                         {check ? <Search SearchResult={SearchResultForCompany} onSelect={(value: any, {valId}: {valId: number | undefined}) => {
                                                 input.onChange(valId)
                                             }} placeholder={"Companies"} defaultValue={myComp.data.name} /> :
-                                            <div onClick={() => setCheck(true)}><h1 style={{margin: 0}}>{myComp.data.name}</h1></div>
+                                            <div onClick={() => data.role === 'dispatcher' && setCheck(true)}><h1 style={{margin: 0}}>{myComp.data.name}</h1></div>
                                         }
                                     </>
                                 )}
