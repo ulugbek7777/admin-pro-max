@@ -1,6 +1,7 @@
 import React from 'react';
 import {Spin, Table, Tag} from "antd";
 import {Link} from "react-router-dom";
+import {userCompany} from "../../API/Dailies/userCompany";
 
 // headers: [
 //     {text: 'no', value: 'no', sortable: false },
@@ -21,6 +22,7 @@ interface userDataSource {
     userEmail: string | undefined;
     id: number | string;
     userId: number | string | undefined;
+    delete: number | string;
     // actions: number | string;
 }
 const columns: object[] = [
@@ -59,6 +61,14 @@ const columns: object[] = [
         dataIndex: 'userId',
         key: 'userId',
     },
+    {
+        title: 'Delete',
+        dataIndex: 'delete',
+        key: 'delete',
+        render: (id: number | string) => <div style={{color: '#00c5ff'}} onClick={() => {
+            userCompany.deleteUserCompany(id)
+        }}>Delete</div>,
+    },
 
 ];
 const UserCompanies = ({ userCompanies, total = 0, onChange }: { userCompanies: Array<any> | undefined, total: number | undefined, onChange(current: any): void }) => {
@@ -74,6 +84,7 @@ const UserCompanies = ({ userCompanies, total = 0, onChange }: { userCompanies: 
                         userEmail: u.user?.email,
                         id: u.id,
                         userId: u.user?.id,
+                        delete: u.id
                     }
                     return obj;
                 })} columns={columns} pagination={{ total: total, pageSizeOptions: [10] }} />
