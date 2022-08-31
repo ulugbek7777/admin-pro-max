@@ -3,6 +3,7 @@ import {DatePicker, PaginationProps, Spin, Table} from "antd";
 import moment from "moment";
 import Search from '../Utils/Search';
 import {SearchResultForCompany, SearchResultForFindDriver} from '../Utils/SearchResults';
+import {Link} from "react-router-dom";
 
 interface dalyDataSource {
     id: number | string;
@@ -12,6 +13,7 @@ interface dalyDataSource {
     lastLogStartDate: string | undefined | null;
     lastLogEndDate: string | undefined | null;
     key: number | string;
+    edit: number | string;
 }
 
 const columns: object[] = [
@@ -45,6 +47,12 @@ const columns: object[] = [
         dataIndex: 'lastLogEndDate',
         key: 'lastLogEndDate',
     },
+    {
+        title: 'Edit',
+        dataIndex: 'edit',
+        key: 'edit',
+        render: (id: number | string) => <Link to={`${id}`}>Edit</Link>,
+    },
 ];
 const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, findDailiesByCompany, findDailiesByDriver, changeDate}:
     {dailiesData: object[], total: number | undefined, changeCurrentSkip(current: number): any, loading: boolean, findDailiesByCompany(id: number | undefined): void, findDailiesByDriver(driverId: number | string | undefined): void, changeDate(date: string): void}) => {
@@ -77,7 +85,8 @@ const DaliesListTable = ({dailiesData, total = 1, changeCurrentSkip, loading, fi
                         lastLogStatus: u.last_log?.status,
                         lastLogStartDate: u.last_log?.start_date,
                         lastLogEndDate: u.last_log?.end_date,
-                        key: u.id
+                        key: u.id,
+                        edit: u.id,
                     }
                     return obj;
                 })} columns={columns} pagination={{ total: total, pageSizeOptions: [10] }} />
