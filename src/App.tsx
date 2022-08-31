@@ -20,6 +20,7 @@ import Companies from "./Components/Companies/Companies";
 import { Company } from "./Components/Companies/Company/Company";
 import Users from "./Components/Users/Users";
 import User from "./Components/Users/User/User";
+import UserCompanies from "./Components/UserCompanies/UserCompanies";
 const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
     const isAuthenticated = localStorage.getItem('token') as string;
@@ -52,7 +53,7 @@ const App: React.FC = () => {
                         theme="dark"
                         mode="inline"
                         defaultSelectedKeys={[(location.pathname.includes('/dailies') && '/dailies') || (location.pathname.includes('/companies') && '/companies')
-                        || (location.pathname.includes('/users') && '/users')]}
+                        || (location.pathname.includes('/users') && '/users') || (location.pathname.includes('/user-companies') && '/user-companies')]}
                     >
                         <Menu.Item key={'/dailies'}>
                             <Link to="/dailies" className="nav-text">Dailies</Link>
@@ -62,6 +63,9 @@ const App: React.FC = () => {
                         </Menu.Item>
                         <Menu.Item key={'/users'}>
                             <Link to="/users" className="nav-text">Users</Link>
+                        </Menu.Item>
+                        <Menu.Item key={'/user-companies'}>
+                            <Link to="/user-companies" className="nav-text">UsersCompanies</Link>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -84,6 +88,7 @@ const App: React.FC = () => {
                             <Route path="/companies/:id" element={<Company />} />
                             <Route path="/users" element={<Users />} />
                             <Route path="/users/:id" element={<User />} />
+                            <Route path="/user-companies" element={<UserCompanies />} />
                         </Routes>
                     </Content>
                 </Layout>
