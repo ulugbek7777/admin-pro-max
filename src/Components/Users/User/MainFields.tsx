@@ -62,13 +62,7 @@ const MainFields = ({ data }: { data: any }) => {
                             <Field
                                 name="role"
                                 render={({input}: { input: any }) => (
-                                    <Select defaultValue={input.value} onChange={(value, option) => {
-                                        input.onChange(value)
-                                    }} style={{width: '100%'}}>
-                                        <Option key={'driver'}>Driver</Option>
-                                        <Option key={'dispatcher'}>Dispatcher</Option>
-                                        <Option key={'admin'}>Admin</Option>
-                                    </Select>
+                                    <h1 style={{textTransform: 'uppercase'}}>{input.value}</h1>
                                 )}
                             />
                         </div>
@@ -86,7 +80,7 @@ const MainFields = ({ data }: { data: any }) => {
                             />
                         </div>
                     </Col>
-                    <Col span={6}>
+                    {data.role !== 'driver' && <Col span={6}>
                         <div>
                             <label>Is Owner: </label>
                             <Field
@@ -96,8 +90,8 @@ const MainFields = ({ data }: { data: any }) => {
                                 )}
                             />
                         </div>
-                    </Col>
-                    <Col span={6}>
+                    </Col>}
+                    {data.role !== 'driver' && <Col span={6}>
                         <div>
                             <label>Is Support: </label>
                             <Field
@@ -107,7 +101,7 @@ const MainFields = ({ data }: { data: any }) => {
                                 )}
                             />
                         </div>
-                    </Col>
+                    </Col>}
                     <Col span={6}>
                         <div>
                             <label>Email Verified: </label>
