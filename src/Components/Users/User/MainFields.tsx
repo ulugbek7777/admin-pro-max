@@ -46,10 +46,10 @@ const MainFields = ({ data }: { data: any }) => {
                                 name="companyId"
                                 render={({input}: { input: any }) => (
                                     <>
-                                        {check ? <Search SearchResult={SearchResultForCompany} onSelect={(value: any, {valId}: {valId: number | undefined}) => {
+                                        {(check || !myComp?.data?.name) ? <Search SearchResult={SearchResultForCompany} onSelect={(value: any, {valId}: {valId: number | undefined}) => {
                                                 input.onChange(valId)
-                                            }} placeholder={"Companies"} defaultValue={myComp.data.name} /> :
-                                            <div onClick={() => data.role === 'dispatcher' && setCheck(true)}><h1 style={{margin: 0}}>{myComp.data.name}</h1></div>
+                                            }} placeholder={"Companies"} defaultValue={myComp?.data?.name} /> :
+                                            <div onClick={() => data.role === 'dispatcher' && setCheck(true)}><h1 style={{margin: 0}}>{myComp?.data?.name}</h1></div>
                                         }
                                     </>
                                 )}
@@ -261,7 +261,7 @@ const MainFields = ({ data }: { data: any }) => {
                 </div>}
             </Space>
         </div>
-    ) : <Spin size="large" spinning={!myComp.data}></Spin>
+    ) : <Spin size="large" spinning={myComp?.isLoading}></Spin>
 };
 
 export default MainFields;
